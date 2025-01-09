@@ -1,0 +1,19 @@
+{
+  "name": "tscreatescript",
+  "version": "1.0.3",
+  "description": "Setup TypeScript project with predefined configuration",
+  "main": "bin/setup.js",
+  "bin": {
+    "setup-ts": "./bin/setup.js"
+  },
+  "keywords": [
+    "typescript",
+    "setup",
+    "npx"
+  ],
+  "author": "Lenam0n",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "os": "^0.1.2"
+  }
+}

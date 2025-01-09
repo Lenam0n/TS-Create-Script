@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "ts-node ./src/index.ts",
+    "build": "tsc"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "ts-node": ""
+  },
+  "devDependencies": {
+    "typescript": "",
+    "@types/node": ""
+  }
+}
