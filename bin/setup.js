@@ -7,6 +7,7 @@ const os = require("os");
 // Importiere Konfigurationen
 const npmConfigTemplate = require("../configs/npmConfig.json");
 const tsConfig = require("../configs/tsConfig.json");
+const gitConfig = require("../configs/gitConfig.json");
 
 // Lese den Projekt-Namen aus den Argumenten (optional)
 const args = process.argv.slice(2);
@@ -15,17 +16,13 @@ const projectName = args[0]?.toLowerCase() || "my-typescript-project";
 // Funktion zum Abrufen des GitHub-Namens
 function getGitHubUserName() {
   try {
-    // Git Config Befehl, um den GitHub-Benutzernamen abzurufen
     const name = execSync("git config --get user.name", {
       encoding: "utf8",
     }).trim();
-    if (name) {
-      return name;
-    }
+    return name || null;
   } catch (error) {
-    // Falls der Befehl fehlschlägt, wird nichts getan
+    return null;
   }
-  return null;
 }
 
 // GitHub-Benutzernamen abrufen, falls vorhanden, ansonsten Systembenutzername verwenden
@@ -46,7 +43,7 @@ console.log("Updating package.json...");
 const npmConfig = {
   ...npmConfigTemplate,
   name: projectName,
-  author, // GitHub-Benutzername oder Systembenutzername
+  author,
 };
 fs.writeFileSync("package.json", JSON.stringify(npmConfig, null, 2));
 
@@ -72,7 +69,16 @@ if (devDependencies.length > 0) {
 console.log("Creating tsconfig.json...");
 fs.writeFileSync("tsconfig.json", JSON.stringify(tsConfig, null, 2));
 
-// Schritt 6: Ordnerstruktur erstellen
+// Schritt 6: .gitignore aus gitConfig.json erstellen
+console.log("Creating .gitignore...");
+const gitignoreContent = gitConfig.ignore.join("\n") + "\n";
+fs.writeFileSync(".gitignore", gitignoreContent);
+
+// Schritt 7: .env-Datei erstellen
+console.log("Creating .env file...");
+fs.writeFileSync(".env", "# Add your environment variables here\n");
+
+// Schritt 8: Ordnerstruktur erstellen
 console.log("Setting up folder structure...");
 if (!fs.existsSync("src")) {
   fs.mkdirSync("src");

@@ -7,9 +7,9 @@
     "dev": "ts-node ./src/index.ts",
     "build": "tsc"
   },
-  "license": "MIT",
   "dependencies": {
-    "ts-node": ""
+    "ts-node": "",
+    "dotenv": ""
   },
   "devDependencies": {
     "typescript": "",

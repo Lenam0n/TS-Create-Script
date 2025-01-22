@@ -39,13 +39,15 @@ project-directory/
 ├── node_modules/
 ├── src/
 │ └── index.ts
+├── .gitignore
+├── .env
 ```
 
 ---
 
 ## Configuration Files
 
-The script uses two JSON configuration files located in the configs directory:
+The script uses three JSON configuration files located in the configs directory:
 
 ### 1. npmConfig.json
 
@@ -61,7 +63,8 @@ Defines the package.json template, including dependencies, scripts, and metadata
     "build": "tsc"
   },
   "dependencies": {
-    "ts-node": "" // Latest stable version
+    "ts-node": "", // Latest stable version
+    "dotenv": "" // Latest stable version
   },
   "devDependencies": {
     "typescript": "4.9.5", // Specific version
@@ -89,14 +92,93 @@ Specifies the TypeScript compiler options.
 }
 ```
 
+### 3. gitConfig.json
+
+Defines the .gitignore template used by the project. This configuration file allows for easy customization of ignored files and directories.
+
+```json
+{
+  "ignore": [
+    "# Node Modules",
+    "node_modules/",
+    "dist/",
+    "coverage/",
+    "temp/",
+    "*.log",
+    "",
+    "# TypeScript",
+    "*.tsbuildinfo",
+    "",
+    "# Environment variables",
+    ".env",
+    ".env.local",
+    ".env.development",
+    ".env.production",
+    ".env.test",
+    "",
+    "# IDE-Specific Files",
+    ".vscode/",
+    ".idea/",
+    ".DS_Store"
+  ]
+}
+```
+
+## Additional Files
+
+### 1. .gitignore
+
+A .gitignore file is automatically created based on the configs/gitConfig.json. It prevents unwanted files such as node_modules, build artifacts, and environment variables from being tracked by Git.
+
+Example .gitignore:
+
+```gitignore
+# Node Modules
+node_modules/
+dist/
+coverage/
+temp/
+*.log
+
+# TypeScript
+*.tsbuildinfo
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# IDE-Specific Files
+.vscode/
+.idea/
+.DS_Store
+```
+
+### 2. .env
+
+A blank .env file is created to store environment variables. You can add your sensitive API keys and configuration settings here.
+
+Example .env:
+
+```env
+# Add your environment variables here
+API_KEY=
+DATABASE_URL=
+```
+
 ---
 
 ## Author Detection
 
+```plaintext
     If GitHub is configured:
-    •	The author field in package.json will use the username from git config --get user.name.
+    • The author field in package.json will use the username from git config --get user.name.
+
     If GitHub is not configured:
-    •	The system username will be used as a fallback.
+    • The system username will be used as a fallback.
+```
 
 ---
 
